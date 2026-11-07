@@ -1,0 +1,5 @@
+# Python 3.12; versions follow NETW908 Labs 4 and 5
+ipykernel==7.3.0
+pandas==2.3.3
+pydantic==2.13.5
+duckdb==1.5.6

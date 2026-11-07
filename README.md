@@ -1,0 +1,7 @@
+# Task 2 — Contracts, Nested Data and a Star Schema
+
+**Name:** Hanna Mounir  
+**ID:** 58-11495  
+**Group:** IET-01
+
+I processed 283 booking lines from the original JSONL file using Pydantic models for tickets, students, events, and complete bookings. I quarantined 24 records: 4 had invalid student IDs, 4 had totals that did not match their ticket amounts, 3 had invalid ticket types, 3 had ticket quantities below one, 2 had missing events, 2 had empty ticket lists, 3 were booked on or after the event date, and 3 had duplicate booking IDs. This left 259 valid bookings. I checked for duplicates after validation because an invalid booking should not block a later valid copy of the same ID. Swapping the checks would not change the counts in this file, since the repeated IDs belong to valid bookings, but it could change them if an invalid copy arrived first. I found schema drift in the optional `promo_code` field, which first appeared on 20 October 2026. Missing values are stored as `None`, so older bookings still pass validation. I flattened the bookings into one booking table and one ticket-entry table, then created event and student dimensions with surrogate keys and a ticket-level fact in DuckDB. I excluded the booking `total` from the fact because a booking can contain several ticket entries. Repeating its total on each fact row would overcount revenue when using `SUM(total)`; summing the individual ticket `amount` instead gives the correct total.

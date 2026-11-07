@@ -1,0 +1,5 @@
+# Local notebook files
+.ipynb_checkpoints/
+__pycache__/
+.venv/
+.env
